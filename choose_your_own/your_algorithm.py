@@ -24,14 +24,22 @@ plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
 plt.legend()
 plt.xlabel("bumpiness")
 plt.ylabel("grade")
-plt.show()
 ################################################################################
 
 
-### your code here!  name your classifier object clf if you want the 
+### your code here!  name your classifier object clf if you want the
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.ensemble import AdaBoostClassifier as AB
+from sklearn.ensemble import RandomForestClassifier as RF
+from sklearn.metrics import accuracy_score
 
+for clf_class in (KNN, AB, RF):
+    clf = clf_class()
+    clf.fit(features_train, labels_train)
+    pred = clf.predict(features_test)
+    print("%s:\t%f" % (str(clf_class), accuracy_score(pred, labels_test)))
 
 
 
@@ -40,5 +48,6 @@ plt.show()
 
 try:
     prettyPicture(clf, features_test, labels_test)
+    plt.show()
 except NameError:
     pass
