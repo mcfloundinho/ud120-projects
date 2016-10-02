@@ -7,14 +7,13 @@ def outlierCleaner(predictions, ages, net_worths):
         residual errors (difference between the prediction
         and the actual net worth).
 
-        Return a list of tuples named cleaned_data where 
+        Return a list of tuples named cleaned_data where
         each tuple is of the form (age, net_worth, error).
     """
-    
-    cleaned_data = []
 
-    ### your code goes here
+    zipped = zip(predictions, ages, net_worths)
+    result = list(map(lambda t: (t[1], t[2], t[0] - t[2]), zipped))
+    result.sort(key=lambda t: abs(t[2]))
 
-    
-    return cleaned_data
+    return result[:len(result) * 9 / 10]
 
