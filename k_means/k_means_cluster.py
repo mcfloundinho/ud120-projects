@@ -74,6 +74,13 @@ for f1, f2 in finance_features:
 ### for the data and store them to a list called pred
 
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+data = scaler.fit_transform(data)
+
+print(scaler.transform(numpy.array([0., 200000., 1000000.])))
+
 clf = KMeans(n_clusters=2)
 clf.fit(data)
 pred = clf.predict(data)
