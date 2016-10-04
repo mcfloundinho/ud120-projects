@@ -29,7 +29,8 @@ from_chris = open("from_chris.txt", "r")
 from_data = []
 word_data = []
 
-stopwords = ("sara", "shackleton", "chris", "germani")
+stopwords = ("sara", "shackleton", "chris", "germani", "sshacklensf",
+             "cgermannsf")
 
 ### temp_counter is a way to speed up the development--there are
 ### thousands of emails from Sara and Chris, so running over all of them
