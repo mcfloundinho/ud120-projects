@@ -29,6 +29,8 @@ from_chris = open("from_chris.txt", "r")
 from_data = []
 word_data = []
 
+stopwords = ("sara", "shackleton", "chris", "germani")
+
 ### temp_counter is a way to speed up the development--there are
 ### thousands of emails from Sara and Chris, so running over all of them
 ### can take a long time
@@ -42,9 +44,10 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
         temp_counter += 1
-        if temp_counter < 200:
+        # if temp_counter < 200:
+        if True:
             path = os.path.join('..', path[:-1])
-            print path
+            # print path
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
@@ -53,13 +56,23 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             ### ["sara", "shackleton", "chris", "germani"]
 
             ### append the text to word_data
+            word_data.append(' '.join(filter(lambda s: s not in stopwords,
+                                             parseOutText(email).split(' '))))
 
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
+            from_data.append(0 if name == 'sara' else 1)
 
 
             email.close()
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf.fit(word_data)
+print(len(tfidf.get_feature_names()))
+
 print "emails processed"
+print(word_data[152])
+print(tfidf.get_feature_names()[34597])
 from_sara.close()
 from_chris.close()
 
